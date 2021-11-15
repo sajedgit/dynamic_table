@@ -78,5 +78,17 @@ function  get_table_data_by_filter($table_name,$row)
 }
 
 
+function  insert_table_data($table_name,$row)
+{
+    $condition = implode(' , ', array_map(
+        function ($k) { return "'$k'"; },
+        array_values($row)
+    ));
+
+    $sql = "insert into $table_name values ('',$condition)";
+    return $sql;
+}
+
+
 
 ?>
