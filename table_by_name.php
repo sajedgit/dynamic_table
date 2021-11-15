@@ -2,9 +2,11 @@
 
 <?php
 
-$table_name = $_REQUEST["name"];
+$table_name = $_REQUEST["table_name"];
 $column_sql = get_column_name($table_name);
 $result = $conn->query($column_sql);
+$result_array =  array();
+
 
 if(isset($_POST))
 {
@@ -25,10 +27,18 @@ else
 
 <div class="container">
 
-    <div class="">
-        <h1>View all data from <?php echo $table_name; ?> </h1>
+    <div class="row">
+        <div class="col-xs-9">
+            <h1>View all data from <?php echo $table_name; ?> </h1>
+
+        </div>
+        <div class="col-xs-2" style="margin-top: 30px;">
+            <a href="insert_data.php?table_name=<?php echo $table_name; ?>" class="btn btn-primary">Insert data</a>
+
+        </div>
 
     </div>
+
 
     <br/>
 
@@ -36,7 +46,13 @@ else
         <p>Search data by different criteria  </p>
         <form name="filter" method="post" class="form-inline" action="">
 
-            <?php $i=0; while($row = $result->fetch_assoc()) { $i++; if($i==1) continue; ?>
+            <?php $i=0; while($row = $result->fetch_array()) {
+
+                array_push($result_array,$row['Field']);
+
+                $i++; if($i==1) continue;
+
+                ?>
                 <div class="form-group" style="margin: 20px;">
                     <label for="email"><?php echo $row['Field'] ?></label>
                     <input type="text" class="form-control" name="<?php echo $row['Field'] ?>">
@@ -62,8 +78,8 @@ else
     <table class="table table-striped">
         <thead>
         <tr>
-            <?php while($row = $result->fetch_assoc()) {  ?>
-            <th><?php echo $row['Field'] ?></th>
+            <?php foreach($result_array as $row_header) {  ?>
+            <th><?php echo $row_header ?></th>
             <?php } ?>
         </tr>
         </thead>

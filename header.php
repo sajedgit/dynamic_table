@@ -33,7 +33,7 @@ $result = $conn->query($get_query);
                 while($row = $result->fetch_assoc())
                 {
                     ?>
-                    <li><a href="table_by_name.php?name=<?php echo $row["table_name"]; ?>"><?php echo $row["table_display_name"]; ?></a></li>
+                    <li><a href="table_by_name.php?table_name=<?php echo $row["table_name"]; ?>"><?php echo $row["table_display_name"]; ?></a></li>
                     <?php
                 }
 
