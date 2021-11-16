@@ -47,16 +47,37 @@ else
         <form name="filter" method="post" class="form-inline" action="">
 
             <?php $i=0; while($row = $result->fetch_array()) {
-
                 array_push($result_array,$row['Field']);
-
                 $i++; if($i==1) continue;
-
                 ?>
-                <div class="form-group" style="margin: 20px;">
-                    <label for="email"><?php echo $row['Field'] ?></label>
-                    <input type="text" class="form-control" name="<?php echo $row['Field'] ?>">
-                </div>
+                <?php if($row['Type']==="int(11)"): ?>
+                    <div class="form-group" style="margin: 20px;">
+                        <label for="email"><?php echo $row['Field'] ?></label>
+                        <div class="form-group">
+                            <select name="column_1[]" class="form-control" id="">
+                                <option value="IS">IS</option>
+                                <option value="BETWEEN">BETWEEN</option>
+                            </select>
+                        </div>
+                        <input type="text" class="form-control" name="<?php echo $row['Field'] ?>">
+                    </div>
+                <?php elseif ($row['Type']==="datetime"): ?>
+                    <div class="form-group" style="margin: 20px;">
+                        <label for="email"><?php echo $row['Field'] ?></label>
+                        <div class="form-group">
+                            <select name="column_1[]" class="form-control" id="">
+                                <option value="IS">IS</option>
+                                <option value="BETWEEN">BETWEEN</option>
+                            </select>
+                        </div>
+                        <input type="text" class="form-control" name="<?php echo $row['Field'] ?>">
+                    </div>
+                <?php else: ?>
+                    <div class="form-group" style="margin: 20px;">
+                        <label for="email"><?php echo $row['Field'] ?>--text</label>
+                        <input type="text" class="form-control" name="<?php echo $row['Field'] ?>">
+                    </div>
+                <?php endif; ?>
             <?php } ?>
 
 
